@@ -24,6 +24,39 @@ class DatasetSettings:
 
         self._roots: List[Type[SubmoduleSettings]] = []
         self._download_directory: str = "downloads"
+        self._verbose: bool = False
+
+    @property
+    def verbose(self) -> bool:
+        """Return the verbosity of the dataset."""
+        return self._verbose
+
+    @property
+    def allowed_root_letters(self) -> List[str]:
+        """Return a list of allowed root letters."""
+        root_letters: List[str] = []
+        root_letters_metadata: List[Dict[str, str]] = compress_json.local_load(
+            "root_letters.json"
+        )
+        for root in self._roots:
+            for entry in root_letters_metadata:
+                if root.root_name() == entry["name"]:
+                    root_letters.append(entry["letter"])
+        return root_letters
+
+    @property
+    def allowed_mesh_tree_numbers(self) -> List[str]:
+        """Return a list of allowed MeSH tree numbers."""
+        mesh_tree_numbers: List[str] = []
+        for root in self._roots:
+            mesh_tree_numbers.extend(root.allowed_mesh_tree_numbers())
+        return mesh_tree_numbers
+
+    def set_verbose(self, verbose: bool) -> "DatasetSettings":
+        """Set the verbosity of the dataset."""
+        assert isinstance(verbose, bool)
+        self._verbose = verbose
+        return self
 
     def into_dict(self) -> Dict:
         """Return the dataset settings as a dictionary."""
@@ -38,22 +71,49 @@ class DatasetSettings:
         """Return the download directory for the dataset."""
         return self._download_directory
 
+    @property
+    def version(self) -> int:
+        """Return the version of the dataset."""
+        return self._version["version"]
+
+    @property
+    def descriptors_directory(self) -> str:
+        """Return the directory of the descriptors."""
+        return os.path.join(
+            str(self._version["version"]),
+            "descriptors.txt",
+        )
+
+    @property
+    def chemicals_directory(self) -> str:
+        """Return the directory of the chemicals."""
+        return os.path.join(
+            str(self._version["version"]),
+            "chemicals.txt",
+        )
+
+    @property
+    def qualifiers_directory(self) -> str:
+        """Return the directory of the qualifiers."""
+        return os.path.join(
+            str(self._version["version"]),
+            "qualifiers.txt",
+        )
+
     def download_objectives(self) -> List[DownloadObjective]:
         """Return a list of download objectives for the dataset."""
         download_objectives: List[DownloadObjective] = [
             DownloadObjective(
                 url=self._version["descriptors"],
-                path=os.path.join(
-                    str(self._version["version"]),
-                    "descriptors.txt",
-                ),
+                path=self.descriptors_directory,
             ),
             DownloadObjective(
                 url=self._version["chemicals"],
-                path=os.path.join(
-                    str(self._version["version"]),
-                    "chemicals.txt",
-                ),
+                path=self.chemicals_directory,
+            ),
+            DownloadObjective(
+                url=self._version["qualifiers"],
+                path=self.qualifiers_directory,
             ),
         ]
 

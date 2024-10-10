@@ -1,0 +1,66 @@
+[
+    {
+        "name": "Anatomy",
+        "letter": "A"
+    },
+    {
+        "name": "Organisms",
+        "letter": "B"
+    },
+    {
+        "name": "Diseases",
+        "letter": "C"
+    },
+    {
+        "name": "Chemicals and Drugs",
+        "letter": "D"
+    },
+    {
+        "name": "Analytical, Diagnostic and Therapeutic Techniques and Equipment",
+        "letter": "E"
+    },
+    {
+        "name": "Psychiatry and Psychology",
+        "letter": "F"
+    },
+    {
+        "name": "Phenomena and Processes",
+        "letter": "G"
+    },
+    {
+        "name": "Disciplines and Occupations",
+        "letter": "H"
+    },
+    {
+        "name": "Anthropology, Education, Sociology and Social Phenomena",
+        "letter": "I"
+    },
+    {
+        "name": "Technology, Industry, Agriculture",
+        "letter": "J"
+    },
+    {
+        "name": "Humanities",
+        "letter": "K"
+    },
+    {
+        "name": "Information Science",
+        "letter": "L"
+    },
+    {
+        "name": "Named Groups",
+        "letter": "M"
+    },
+    {
+        "name": "Health Care",
+        "letter": "N"
+    },
+    {
+        "name": "Publication Characteristics",
+        "letter": "V"
+    },
+    {
+        "name": "Geographicals",
+        "letter": "Z"
+    }
+]

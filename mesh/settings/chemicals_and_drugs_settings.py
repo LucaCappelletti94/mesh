@@ -21,7 +21,7 @@ class ChemicalsAndDrugsSettings(SubmoduleSettings):
         """Return the root of the Chemicals and Drugs section."""
         return "Chemicals and Drugs"
 
-    def included_codes(self) -> List[str]:
+    def allowed_mesh_tree_numbers(self) -> List[str]:
         """Return a list of submodule names to include."""
         return self._included_codes
 

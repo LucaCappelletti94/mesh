@@ -13,8 +13,8 @@ class SubmoduleSettings(ABC):
         """Return the root name of the submodule."""
 
     @abstractmethod
-    def included_codes(self) -> List[str]:
-        """Return a list of submodule codes to include."""
+    def allowed_mesh_tree_numbers(self) -> List[str]:
+        """Return a list of allowed MeSH tree numbers."""
 
     @abstractmethod
     def download_objectives(self) -> List[DownloadObjective]:
