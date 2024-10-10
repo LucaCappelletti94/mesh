@@ -148,23 +148,36 @@ The resulting CSVs will be saved in the `mesh_chemistry_2024` directory. The dir
 
 ```json
 {
-    "version": 2024,
-    "categories": [
-        "Chemicals and Drugs"
-    ],
-    "settings": {
-        "chemicals_and_drugs": {
-            "submodules": [
-                "Chemical Actions and Uses",
-                "Chemical and Pharmacologic Phenomena",
-                "Chemical Vocabularies",
-                "Drug Actions",
-                "Pharmacologic Actions"
+    "version": {
+        "version": 2024,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2024/asciimesh/20240101/d2024.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2024/asciimesh/20240101/c2024.bin"
+    },
+    "roots": [
+        {
+            "root": "Chemicals and Drugs",
+            "included_codes": [
+                "D01",
+                "D02",
+                "D03",
+                "D04",
+                "D05",
+                "D06",
+                "D08",
+                "D09",
+                "D10",
+                "D12",
+                "D13",
+                "D20",
+                "D23",
+                "D25",
+                "D26",
+                "D27"
             ],
-            "include_smiles": true,
-            "include_inchi_keys": true
+            "include_smiles": true
         }
-    }
+    ],
+    "downloads_directory": "downloads"
 }
 ```
 
