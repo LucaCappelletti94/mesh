@@ -112,9 +112,19 @@ class MESHReader:
                     record = MESHRecord()
                     continue
 
-                assert " = " in line
+                assert "=" in line, (
+                    f"Invalid line: {line}",
+                    "The line must contain ' = '",
+                )
 
-                key, value = line.split(" = ", 1)
+                key, value = line.split("=", 1)
+
+                value = value.strip()  # Remove leading and trailing whitespaces
+                key = key.strip()
+
+                # In some cases, the value is empty
+                if len(value) == 0:
+                    continue
 
                 assert len(key) > 0
                 assert len(value) > 0

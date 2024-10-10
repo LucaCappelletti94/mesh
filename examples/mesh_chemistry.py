@@ -45,12 +45,17 @@ if __name__ == "__main__":
         default=2024,
         help="Year of the MESH dataset.",
     )
+    parser.add_argument(
+        "--tarball",
+        action="store_true",
+        help="Whether to save the dataset as a tarball.",
+    )
     args = parser.parse_args()
 
     # We build the MESH  dataset.
     mesh_chemistry: Dataset = build_mesh_chemistry(args.year)
     # And we save it to disk.
-    mesh_chemistry.save(f"mesh_{args.year}", tarball=False)
+    mesh_chemistry.save(f"mesh_{args.year}", tarball=args.tarball)
 
     # We convert the MESH dataset to a NetworkX graph.
     graph: nx.DiGraph = mesh_chemistry.to_networkx()

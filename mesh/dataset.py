@@ -2,6 +2,7 @@
 
 from typing import List, Dict, Set
 import os
+import shutil
 import pandas as pd
 import compress_json
 from downloaders import BaseDownloader
@@ -42,7 +43,8 @@ class Dataset:
         compress_json.dump(self._metadata, os.path.join(path, "metadata.json"))
 
         if tarball:
-            os.system(f"tar -czvf {path}.tar.gz {path}")
+            os.system(f"tar -czf {path}.tar.gz {path}")
+            shutil.rmtree(path)
 
     def to_networkx(self) -> nx.DiGraph:
         """Return the dataset as a networkx graph."""
@@ -66,7 +68,7 @@ class Dataset:
     def load(
         version: str,
         download_directory: str = "downloads",
-        verbose: bool = False,
+        verbose: bool = True,
     ) -> "Dataset":
         """Load the dataset from disk."""
         preprocessed: List[Dict[str, str]] = compress_json.local_load(
