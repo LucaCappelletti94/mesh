@@ -1,7 +1,7 @@
 """Submodule defining the Submodule Settings interface."""
 
 from abc import ABC, abstractmethod
-from typing import List, Dict
+from typing import List, Dict, Type
 from mesh.enrichers import Enricher
 
 
@@ -13,7 +13,7 @@ class SubmoduleSettings(ABC):
         """Return the root name of the submodule."""
 
     @abstractmethod
-    def allowed_mesh_tree_numbers(self) -> List[str]:
+    def allowed_mesh_dag_numbers(self) -> List[str]:
         """Return a list of allowed MeSH tree numbers."""
 
     @abstractmethod
@@ -23,5 +23,5 @@ class SubmoduleSettings(ABC):
     @abstractmethod
     def enrichment_procedures(
         self, downloads_directory: str, verbose: bool
-    ) -> List[Enricher]:
+    ) -> List[Type[Enricher]]:
         """Return a list of enrichment procedures for the dataset."""

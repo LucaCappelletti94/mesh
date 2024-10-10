@@ -44,5 +44,9 @@ class MaybeChemical(ABC):
         """Return the InChIKey of the chemical."""
 
     @abstractmethod
-    def set_inchikey(self, inchikey: str) -> None:
-        """Set the InChIKey of the chemical."""
+    def inchi(self) -> Optional[str]:
+        """Return the InChI of the chemical."""
+
+    @abstractmethod
+    def set_inchi_and_inchikey(self, inchi: str, inchikey: str) -> None:
+        """Set the InChI and InChIKey of the chemical."""

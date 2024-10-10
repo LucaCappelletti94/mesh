@@ -56,12 +56,12 @@ class DatasetSettings:
         return root_letters
 
     @property
-    def allowed_mesh_tree_numbers(self) -> List[str]:
+    def allowed_mesh_dag_numbers(self) -> List[str]:
         """Return a list of allowed MeSH tree numbers."""
-        mesh_tree_numbers: List[str] = []
+        mesh_dag_numbers: List[str] = []
         for root in self._roots:
-            mesh_tree_numbers.extend(root.allowed_mesh_tree_numbers())
-        return mesh_tree_numbers
+            mesh_dag_numbers.extend(root.allowed_mesh_dag_numbers())
+        return mesh_dag_numbers
 
     def set_verbose(self, verbose: bool) -> "DatasetSettings":
         """Set the verbosity of the dataset."""
@@ -103,14 +103,6 @@ class DatasetSettings:
             "chemicals.txt",
         )
 
-    @property
-    def qualifiers_directory(self) -> str:
-        """Return the directory of the qualifiers."""
-        return os.path.join(
-            str(self._version["version"]),
-            "qualifiers.txt",
-        )
-
     def download_objectives(self) -> List[DownloadObjective]:
         """Return a list of download objectives for the dataset."""
         return [
@@ -121,11 +113,7 @@ class DatasetSettings:
             DownloadObjective(
                 url=self._version["chemicals"],
                 path=self.chemicals_directory,
-            ),
-            DownloadObjective(
-                url=self._version["qualifiers"],
-                path=self.qualifiers_directory,
-            ),
+            )
         ]
 
     def include_chemicals_and_drugs(

@@ -1,7 +1,7 @@
 """Submodule providing a reader able to read the MESH descriptors."""
 
 import os
-from typing import Iterator, List, Optional
+from typing import Iterator, List, Optional, Dict, Any
 from mesh.reader import MESHReader
 from mesh.settings import DatasetSettings
 from mesh.utils import normalize_string, MaybeChemical
@@ -16,18 +16,17 @@ class MESHChemical(MaybeChemical):
         unique_identifier: str,
         pharmacological_actions: List[str],
         descriptors: List[str],
-        qualifiers: List[str],
     ):
         """Initialize the MESHChemical class."""
         self._name: str = name
         self._unique_identifier: str = unique_identifier
         self._pharmacological_actions: List[str] = pharmacological_actions
         self._descriptors: List[str] = descriptors
-        self._qualifiers: List[str] = qualifiers
         self._compound_id: Optional[int] = None
         self._substance_id: Optional[int] = None
         self._smiles: Optional[str] = None
         self._inchikey: Optional[str] = None
+        self._inchi: Optional[str] = None
 
     def chemical_name(self) -> str:
         """Return the chemical name."""
@@ -67,13 +66,28 @@ class MESHChemical(MaybeChemical):
         """Return the InChIKey."""
         return self._inchikey
 
-    def set_inchikey(self, inchikey: str) -> None:
+    def inchi(self) -> str:
+        """Return the InChI."""
+        return self._inchi
+
+    def set_inchi_and_inchikey(self, inchi: str, inchikey: str) -> None:
         """Set the InChIKey."""
+        self._inchi = inchi
         self._inchikey = inchikey
+
+    @property
+    def descriptors(self) -> List[str]:
+        """Return the descriptors."""
+        return self._descriptors
+
+    @property
+    def pharmacological_actions(self) -> List[str]:
+        """Return the pharmacological actions."""
+        return self._pharmacological_actions
 
     def __repr__(self) -> str:
         """Return the representation of the MESH descriptor."""
-        return f"MESHChemical(name='{self._name}', pharmacological_actions={self._pharmacological_actions}, descriptors={self._descriptors}, qualifiers={self._qualifiers}, compound_id={self._compound_id}, substance_id={self._substance_id}, smiles={self._smiles}, inchikey={self._inchikey})"
+        return f"MESHChemical(name='{self._name}', pharmacological_actions={self._pharmacological_actions}, descriptors={self._descriptors}, compound_id={self._compound_id}, substance_id={self._substance_id}, smiles={self._smiles}, inchikey={self._inchikey})"
 
     @property
     def unique_identifier(self) -> str:
@@ -84,6 +98,18 @@ class MESHChemical(MaybeChemical):
     def name(self) -> str:
         """Return the name of the descriptor."""
         return self._name
+
+    def into_dict(self) -> Dict[str, Any]:
+        """Return the MESH descriptor as a dictionary."""
+        return {
+            "unique_identifier": self.unique_identifier,
+            "name": self.chemical_name(),
+            "compound_id": self.compound_id(),
+            "substance_id": self.substance_id(),
+            "smiles": self.smiles(),
+            "inchi": self._inchi,
+            "inchikey": self.inchikey(),
+        }
 
 
 class MESHChemicalsReader(MESHReader):
@@ -110,12 +136,11 @@ class MESHChemicalsReader(MESHReader):
                 action.split("-")[0] for action in record.get("PA", [])
             ]
             descriptors: List[str] = []
-            qualifiers: List[str] = []
             for headings in record.get("HM", []):
                 for heading in headings.split("/"):
                     heading = heading.split("-")[0].strip(" *")
                     if heading.startswith("Q"):
-                        qualifiers.append(heading)
+                        continue
                     elif heading.startswith("D"):
                         descriptors.append(heading)
                     else:
@@ -126,7 +151,6 @@ class MESHChemicalsReader(MESHReader):
                 unique_identifier=record.unique_identifier,
                 pharmacological_actions=pharmacological_actions,
                 descriptors=descriptors,
-                qualifiers=qualifiers,
             )
 
             yield chemical

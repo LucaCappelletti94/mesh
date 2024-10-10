@@ -58,6 +58,8 @@ setup(
     install_requires=[
         "downloaders",
         "tqdm",
+        "pandas",
+        "networkx",
         "compress_json",
     ],
     extras_require=extras,

@@ -1,9 +1,14 @@
 """Settings regarding the Chemicals and Drugs section of the MESH DAG."""
 
-from typing import List, Dict
+from typing import List, Dict, Type
 import compress_json
 from mesh.settings.submodule_settings import SubmoduleSettings
-from mesh.enrichers import Enricher, CompoundIdEnricher, SMILESEnricher
+from mesh.enrichers import (
+    Enricher,
+    CompoundIdEnricher,
+    SMILESEnricher,
+    InChIKeyEnricher,
+)
 
 
 class ChemicalsAndDrugsSettings(SubmoduleSettings):
@@ -16,12 +21,13 @@ class ChemicalsAndDrugsSettings(SubmoduleSettings):
             "chemicals_and_drugs_codes.json"
         )
         self._include_smiles: bool = False
+        self._include_inchi_keys: bool = False
 
     def root_name(self) -> str:
         """Return the root of the Chemicals and Drugs section."""
         return "Chemicals and Drugs"
 
-    def allowed_mesh_tree_numbers(self) -> List[str]:
+    def allowed_mesh_dag_numbers(self) -> List[str]:
         """Return a list of submodule names to include."""
         return self._included_codes
 
@@ -35,21 +41,34 @@ class ChemicalsAndDrugsSettings(SubmoduleSettings):
 
     def enrichment_procedures(
         self, downloads_directory: str, verbose: bool
-    ) -> List[Enricher]:
+    ) -> List[Type[Enricher]]:
         """Return a list of enrichment procedures for the dataset."""
-        if self._include_smiles:
-            return [
+        enrichers: List[Type[Enricher]] = []
+        if self._include_smiles or self._include_inchi_keys:
+            enrichers.append(
                 CompoundIdEnricher(
                     downloads_directory=downloads_directory,
                     verbose=verbose,
-                ),
+                )
+            )
+
+        if self._include_smiles:
+            enrichers.append(
                 SMILESEnricher(
                     downloads_directory=downloads_directory,
                     verbose=verbose,
-                ),
-            ]
+                )
+            )
 
-        return []
+        if self._include_inchi_keys:
+            enrichers.append(
+                InChIKeyEnricher(
+                    downloads_directory=downloads_directory,
+                    verbose=verbose,
+                )
+            )
+
+        return enrichers
 
     def _include_code(self, name: str):
         """Include a code in the dataset."""
@@ -152,4 +171,9 @@ class ChemicalsAndDrugsSettings(SubmoduleSettings):
     def include_smiles(self) -> "ChemicalsAndDrugsSettings":
         """Return whether to include SMILES in the dataset."""
         self._include_smiles = True
+        return self
+
+    def include_inchi_keys(self) -> "ChemicalsAndDrugsSettings":
+        """Return whether to include InChI Keys in the dataset."""
+        self._include_inchi_keys = True
         return self
