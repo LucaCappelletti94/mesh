@@ -3,7 +3,7 @@
 from typing import List, Dict
 import compress_json
 from mesh.settings.submodule_settings import SubmoduleSettings
-from mesh.utils import DownloadObjective
+from mesh.enrichers import Enricher, CompoundIdEnricher, SMILESEnricher
 
 
 class ChemicalsAndDrugsSettings(SubmoduleSettings):
@@ -33,24 +33,23 @@ class ChemicalsAndDrugsSettings(SubmoduleSettings):
             "include_smiles": self._include_smiles,
         }
 
-    def download_objectives(self) -> List[DownloadObjective]:
-        """Return a list of download objectives for the submodule."""
-        download_objectives: List[DownloadObjective] = []
-        pubchem_metadata = compress_json.local_load("pubchem.json")
+    def enrichment_procedures(
+        self, downloads_directory: str, verbose: bool
+    ) -> List[Enricher]:
+        """Return a list of enrichment procedures for the dataset."""
         if self._include_smiles:
-            download_objectives.extend(
-                [
-                    DownloadObjective(
-                        url=pubchem_metadata["CID-MeSH"]["url"],
-                        path=pubchem_metadata["CID-MeSH"]["file_name"],
-                    ),
-                    DownloadObjective(
-                        url=pubchem_metadata["CID-SMILES"]["url"],
-                        path=pubchem_metadata["CID-SMILES"]["file_name"],
-                    ),
-                ]
-            )
-        return download_objectives
+            return [
+                CompoundIdEnricher(
+                    downloads_directory=downloads_directory,
+                    verbose=verbose,
+                ),
+                SMILESEnricher(
+                    downloads_directory=downloads_directory,
+                    verbose=verbose,
+                ),
+            ]
+
+        return []
 
     def _include_code(self, name: str):
         """Include a code in the dataset."""

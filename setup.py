@@ -58,7 +58,6 @@ setup(
     install_requires=[
         "downloaders",
         "tqdm",
-        "pygtrie",
         "compress_json",
     ],
     extras_require=extras,

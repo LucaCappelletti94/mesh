@@ -37,7 +37,7 @@ class MESHQualifiersReader(MESHReader):
         """Initialize the MESHQualifierssReader class."""
         super().__init__(
             path=os.path.join(
-                settings.download_directory,
+                settings.downloads_directory,
                 settings.qualifiers_directory,
             ),
             verbose=settings.verbose,

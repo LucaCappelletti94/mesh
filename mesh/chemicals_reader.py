@@ -1,13 +1,13 @@
 """Submodule providing a reader able to read the MESH descriptors."""
 
 import os
-from typing import Iterator, List
+from typing import Iterator, List, Optional
 from mesh.reader import MESHReader
 from mesh.settings import DatasetSettings
-from mesh.utils import normalize_string
+from mesh.utils import normalize_string, MaybeChemical
 
 
-class MESHChemical:
+class MESHChemical(MaybeChemical):
     """Class representing a MESH descriptor."""
 
     def __init__(
@@ -24,10 +24,56 @@ class MESHChemical:
         self._pharmacological_actions: List[str] = pharmacological_actions
         self._descriptors: List[str] = descriptors
         self._qualifiers: List[str] = qualifiers
+        self._compound_id: Optional[int] = None
+        self._substance_id: Optional[int] = None
+        self._smiles: Optional[str] = None
+        self._inchikey: Optional[str] = None
+
+    def chemical_name(self) -> str:
+        """Return the chemical name."""
+        return self._name
+
+    def maybe_chemical(self) -> bool:
+        """Return whether the descriptor is a chemical."""
+        return True
+
+    def compound_id(self) -> int:
+        """Return the PubChem Compound ID."""
+        return self._compound_id
+
+    def set_compound_id(self, compound_id: int) -> None:
+        """Set the PubChem Compound ID."""
+        assert isinstance(compound_id, int), f"Invalid compound ID: {compound_id}"
+        self._compound_id = compound_id
+
+    def substance_id(self) -> int:
+        """Return the PubChem Substance ID."""
+        return self._substance_id
+
+    def set_substance_id(self, substance_id: int) -> None:
+        """Set the PubChem Substance ID."""
+        assert isinstance(substance_id, int), f"Invalid substance ID: {substance_id}"
+        self._substance_id = substance_id
+
+    def smiles(self) -> str:
+        """Return the SMILES string."""
+        return self._smiles
+
+    def set_smiles(self, smiles: str) -> None:
+        """Set the SMILES string."""
+        self._smiles = smiles
+
+    def inchikey(self) -> str:
+        """Return the InChIKey."""
+        return self._inchikey
+
+    def set_inchikey(self, inchikey: str) -> None:
+        """Set the InChIKey."""
+        self._inchikey = inchikey
 
     def __repr__(self) -> str:
         """Return the representation of the MESH descriptor."""
-        return f"MESHChemical(name='{self._name}', pharmacological_actions={self._pharmacological_actions}, descriptors={self._descriptors}, qualifiers={self._qualifiers})"
+        return f"MESHChemical(name='{self._name}', pharmacological_actions={self._pharmacological_actions}, descriptors={self._descriptors}, qualifiers={self._qualifiers}, compound_id={self._compound_id}, substance_id={self._substance_id}, smiles={self._smiles}, inchikey={self._inchikey})"
 
     @property
     def unique_identifier(self) -> str:
@@ -47,7 +93,7 @@ class MESHChemicalsReader(MESHReader):
         """Initialize the MESHChemicalsReader class."""
         super().__init__(
             path=os.path.join(
-                settings.download_directory,
+                settings.downloads_directory,
                 settings.chemicals_directory,
             ),
             verbose=settings.verbose,
@@ -56,11 +102,12 @@ class MESHChemicalsReader(MESHReader):
     def __iter__(self) -> Iterator[MESHChemical]:
         """Return the iterator."""
         for record in super().__iter__():
-            assert record.record_type == "C", f"Invalid record type: {record.record_type}"
+            assert (
+                record.record_type == "C"
+            ), f"Invalid record type: {record.record_type}"
             name = normalize_string(record["NM"][0])
             pharmacological_actions = [
-                action.split("-")[0]
-                for action in record.get("PA", [])
+                action.split("-")[0] for action in record.get("PA", [])
             ]
             descriptors: List[str] = []
             qualifiers: List[str] = []

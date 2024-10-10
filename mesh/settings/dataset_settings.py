@@ -6,6 +6,7 @@ import compress_json
 from mesh.settings.chemicals_and_drugs_settings import ChemicalsAndDrugsSettings
 from mesh.settings.submodule_settings import SubmoduleSettings
 from mesh.utils import DownloadObjective
+from mesh.enrichers import Enricher
 
 
 class DatasetSettings:
@@ -23,8 +24,18 @@ class DatasetSettings:
             raise ValueError(f"Version {version} not found.")
 
         self._roots: List[Type[SubmoduleSettings]] = []
-        self._download_directory: str = "downloads"
+        self._downloads_directory: str = "downloads"
         self._verbose: bool = False
+
+    def enrichment_procedures(self) -> List[Enricher]:
+        """Return a list of enrichment procedures for the dataset."""
+        enrichers: List[Enricher] = []
+        for root in self._roots:
+            enrichers.extend(root.enrichment_procedures(
+                downloads_directory=self._downloads_directory,
+                verbose=self._verbose,
+            ))
+        return enrichers
 
     @property
     def verbose(self) -> bool:
@@ -63,13 +74,13 @@ class DatasetSettings:
         return {
             "version": self._version,
             "roots": [root.into_dict() for root in self._roots],
-            "download_directory": self._download_directory,
+            "downloads_directory": self._downloads_directory,
         }
 
     @property
-    def download_directory(self) -> str:
+    def downloads_directory(self) -> str:
         """Return the download directory for the dataset."""
-        return self._download_directory
+        return self._downloads_directory
 
     @property
     def version(self) -> int:
@@ -102,7 +113,7 @@ class DatasetSettings:
 
     def download_objectives(self) -> List[DownloadObjective]:
         """Return a list of download objectives for the dataset."""
-        download_objectives: List[DownloadObjective] = [
+        return [
             DownloadObjective(
                 url=self._version["descriptors"],
                 path=self.descriptors_directory,
@@ -117,10 +128,6 @@ class DatasetSettings:
             ),
         ]
 
-        for root in self._roots:
-            download_objectives.extend(root.download_objectives())
-        return download_objectives
-
     def include_chemicals_and_drugs(
         self, settings: ChemicalsAndDrugsSettings
     ) -> "DatasetSettings":
@@ -129,9 +136,9 @@ class DatasetSettings:
         self._roots.append(settings)
         return self
 
-    def set_download_directory(self, directory: str) -> "DatasetSettings":
+    def set_downloads_directory(self, directory: str) -> "DatasetSettings":
         """Set the download directory for the dataset."""
         assert isinstance(directory, str)
         assert len(directory) > 0
-        self._download_directory = directory
+        self._downloads_directory = directory
         return self

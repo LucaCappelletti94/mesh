@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 from typing import List, Dict
-from mesh.utils import DownloadObjective
+from mesh.enrichers import Enricher
 
 
 class SubmoduleSettings(ABC):
@@ -17,9 +17,11 @@ class SubmoduleSettings(ABC):
         """Return a list of allowed MeSH tree numbers."""
 
     @abstractmethod
-    def download_objectives(self) -> List[DownloadObjective]:
-        """Return a list of download objectives for the submodule."""
-
-    @abstractmethod
     def into_dict(self) -> Dict:
         """Return the submodule settings as a dictionary."""
+
+    @abstractmethod
+    def enrichment_procedures(
+        self, downloads_directory: str, verbose: bool
+    ) -> List[Enricher]:
+        """Return a list of enrichment procedures for the dataset."""

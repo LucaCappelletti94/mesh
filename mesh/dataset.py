@@ -3,6 +3,7 @@
 from typing import List, Dict
 import os
 from downloaders import BaseDownloader
+from tqdm.auto import tqdm
 from mesh.settings import DatasetSettings
 from mesh.descriptors_reader import MESHDescriptorsReader, MESHDescriptor
 from mesh.chemicals_reader import MESHChemicalsReader, MESHChemical
@@ -29,7 +30,7 @@ class Dataset:
         for download_objective in settings.download_objectives():
             paths.append(
                 os.path.join(
-                    settings.download_directory,
+                    settings.downloads_directory,
                     download_objective.path,
                 )
             )
@@ -42,11 +43,26 @@ class Dataset:
         )
 
         chemicals: List[MESHChemical] = list(MESHChemicalsReader(settings=settings))
-
         qualifiers: List[MESHQualifier] = list(MESHQualifiersReader(settings=settings))
 
-        print(descriptors[:4])
-        print(chemicals[:4])
-        print(qualifiers[:4])
+        enrichment_procedures = settings.enrichment_procedures()
+
+        for enricher in tqdm(
+            enrichment_procedures,
+            desc="Enriching dataset",
+            disable=not settings.verbose,
+            leave=False,
+            dynamic_ncols=True,
+        ):
+            for descriptor in descriptors:
+                enricher.enrich(entry=descriptor)
+            for chemical in chemicals:
+                enricher.enrich(entry=chemical)
+            for qualifier in qualifiers:
+                enricher.enrich(entry=qualifier)
+
+        print(descriptors[:5])
+        print(chemicals[:5])
+        print(qualifiers[:5])
 
         return Dataset(metadata=settings.into_dict())
