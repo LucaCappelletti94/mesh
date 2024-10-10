@@ -1,0 +1,14 @@
+{
+    "MeSH-PHARM": {
+        "url": "https://ftp.ncbi.nlm.nih.gov/pubchem/Compound/Extras/MeSH-Pharm",
+        "file_name": "mesh_pharm.txt"
+    },
+    "CID-MeSH": {
+        "url": "https://ftp.ncbi.nlm.nih.gov/pubchem/Compound/Extras/CID-MeSH",
+        "file_name": "cid_mesh.tsv"
+    },
+    "CID-SMILES": {
+        "url": "https://ftp.ncbi.nlm.nih.gov/pubchem/Compound/Extras/CID-SMILES.gz",
+        "file_name": "cid_smiles.tsv.gz"
+    }
+}

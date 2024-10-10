@@ -1,0 +1,72 @@
+[
+    {
+        "version": 2011,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2011/asciimesh/d2011.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2011/asciimesh/c2011.bin"
+    },
+    {
+        "version": 2012,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2012/asciimesh/d2012.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2012/asciimesh/c2012.bin"
+    },
+    {
+        "version": 2013,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2013/asciimesh/d2013.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2013/asciimesh/c2013.bin"
+    },
+    {
+        "version": 2014,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2014/asciimesh/d2014.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2014/asciimesh/c2014.bin"
+    },
+    {
+        "version": 2015,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2015/asciimesh/d2015.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2015/asciimesh/c2015.bin"
+    },
+    {
+        "version": 2016,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2016/asciimesh/d2016.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2016/asciimesh/c2016.bin"
+    },
+    {
+        "version": 2017,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2017/asciimesh/d2017.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2017/asciimesh/c2017.bin"
+    },
+    {
+        "version": 2018,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2018/asciimesh/d2018.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2018/asciimesh/c2018.bin"
+    },
+    {
+        "version": 2019,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2019/asciimesh/d2019.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2019/asciimesh/c2019.bin"
+    },
+    {
+        "version": 2020,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2020/asciimesh/d2020.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2020/asciimesh/c2020.bin"
+    },
+    {
+        "version": 2021,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2021/asciimesh/d2021.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2021/asciimesh/c2021.bin"
+    },
+    {
+        "version": 2022,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2022/asciimesh/d2022.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2022/asciimesh/c2022.bin"
+    },
+    {
+        "version": 2023,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2023/asciimesh/d2023.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2023/asciimesh/c2023.bin"
+    },
+    {
+        "version": 2024,
+        "descriptors": "https://nlmpubs.nlm.nih.gov/projects/mesh/2024/asciimesh/20240101/d2024.bin",
+        "chemicals": "https://nlmpubs.nlm.nih.gov/projects/mesh/2024/asciimesh/20240101/c2024.bin"
+    }
+]

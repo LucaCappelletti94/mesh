@@ -1,0 +1,66 @@
+[
+    {
+        "name": "Inorganic Chemicals",
+        "code": "D01"
+    },
+    {
+        "name": "Organic Chemicals",
+        "code": "D02"
+    },
+    {
+        "name": "Heterocyclic Compounds",
+        "code": "D03"
+    },
+    {
+        "name": "Polycyclic Compounds",
+        "code": "D04"
+    },
+    {
+        "name": "Macromolecular Substances",
+        "code": "D05"
+    },
+    {
+        "name": "Hormones, Hormone Substitutes, and Hormone Antagonists",
+        "code": "D06"
+    },
+    {
+        "name": "Enzymes and Coenzymes",
+        "code": "D08"
+    },
+    {
+        "name": "Carbohydrates",
+        "code": "D09"
+    },
+    {
+        "name": "Lipids",
+        "code": "D10"
+    },
+    {
+        "name": "Amino Acids, Peptides, and Proteins",
+        "code": "D12"
+    },
+    {
+        "name": "Nucleic Acids, Nucleotides, and Nucleosides",
+        "code": "D13"
+    },
+    {
+        "name": "Complex Mixtures",
+        "code": "D20"
+    },
+    {
+        "name": "Biological Factors",
+        "code": "D23"
+    },
+    {
+        "name": "Biomedical and Dental Materials",
+        "code": "D25"
+    },
+    {
+        "name": "Pharmaceutical Preparations",
+        "code": "D26"
+    },
+    {
+        "name": "Chemical Actions and Uses",
+        "code": "D27"
+    }
+]
