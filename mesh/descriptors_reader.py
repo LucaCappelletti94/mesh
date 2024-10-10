@@ -115,6 +115,7 @@ class MESHDescriptor(MaybeChemical):
             "compound_id": self.compound_id(),
             "substance_id": self.substance_id(),
             "smiles": self.smiles(),
+            "inchi": self.inchi(),
             "inchikey": self.inchikey(),
         }
 
