@@ -1,4 +1,4 @@
-"""Setup for the Mjolnir package."""
+"""Setup for the MESH package."""
 
 import os
 import re
